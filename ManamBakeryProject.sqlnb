@@ -1,0 +1,937 @@
+cells:
+  - kind: 1
+    value: Drop Table
+    languageId: markdown
+  - kind: 2
+    value: "BEGIN EXECUTE IMMEDIATE 'DROP TABLE feedback CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE delivery CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE payment CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE order_details CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE orders CASCADE CONSTRAINTS'; EXCEPTION
+      WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE inventory CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE product CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE category CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE supplier CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE employee CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE membership CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE branch CASCADE CONSTRAINTS'; EXCEPTION
+      WHEN OTHERS THEN NULL; END;\r
+
+      /\r
+
+      \r
+
+      BEGIN EXECUTE IMMEDIATE 'DROP TABLE customer CASCADE CONSTRAINTS';
+      EXCEPTION WHEN OTHERS THEN NULL; END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Create tables
+    languageId: markdown
+  - kind: 1
+    value: Customer
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE customer\r
+
+      (\r
+
+      \    customer_id NUMBER PRIMARY KEY,\r
+
+      \    first_name VARCHAR2(30),\r
+
+      \    last_name VARCHAR2(30),\r
+
+      \    phone VARCHAR2(20),\r
+
+      \    city VARCHAR2(30)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Membership
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE membership\r
+
+      (\r
+
+      \    membership_id NUMBER PRIMARY KEY,\r
+
+      \    customer_id NUMBER,\r
+
+      \    membership_type VARCHAR2(20),\r
+
+      \    points NUMBER,\r
+
+      \    FOREIGN KEY(customer_id)\r
+
+      \    REFERENCES customer(customer_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Branch
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE branch\r
+
+      (\r
+
+      \    branch_id NUMBER PRIMARY KEY,\r
+
+      \    branch_name VARCHAR2(50),\r
+
+      \    address VARCHAR2(100)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Employee
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE employee\r
+
+      (\r
+
+      \    employee_id NUMBER PRIMARY KEY,\r
+
+      \    employee_name VARCHAR2(50),\r
+
+      \    salary NUMBER,\r
+
+      \    branch_id NUMBER,\r
+
+      \    FOREIGN KEY(branch_id)\r
+
+      \    REFERENCES branch(branch_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Supplier
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE supplier\r
+
+      (\r
+
+      \    supplier_id NUMBER PRIMARY KEY,\r
+
+      \    supplier_name VARCHAR2(50),\r
+
+      \    city VARCHAR2(30)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Category
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE category\r
+
+      (\r
+
+      \    category_id NUMBER PRIMARY KEY,\r
+
+      \    category_name VARCHAR2(30)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Product
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE product\r
+
+      (\r
+
+      \    product_id NUMBER PRIMARY KEY,\r
+
+      \    product_name VARCHAR2(50),\r
+
+      \    price NUMBER,\r
+
+      \    category_id NUMBER,\r
+
+      \    supplier_id NUMBER,\r
+
+      \r
+
+      \    FOREIGN KEY(category_id)\r
+
+      \    REFERENCES category(category_id),\r
+
+      \r
+
+      \    FOREIGN KEY(supplier_id)\r
+
+      \    REFERENCES supplier(supplier_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Inventory
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE inventory\r
+
+      (\r
+
+      \    inventory_id NUMBER PRIMARY KEY,\r
+
+      \    product_id NUMBER,\r
+
+      \    quantity NUMBER,\r
+
+      \    FOREIGN KEY(product_id)\r
+
+      \    REFERENCES product(product_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Orders
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE orders\r
+
+      (\r
+
+      \    order_id NUMBER PRIMARY KEY,\r
+
+      \    customer_id NUMBER,\r
+
+      \    employee_id NUMBER,\r
+
+      \    order_date DATE,\r
+
+      \r
+
+      \    FOREIGN KEY(customer_id)\r
+
+      \    REFERENCES customer(customer_id),\r
+
+      \r
+
+      \    FOREIGN KEY(employee_id)\r
+
+      \    REFERENCES employee(employee_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Order details
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE order_details\r
+
+      (\r
+
+      \    detail_id NUMBER PRIMARY KEY,\r
+
+      \    order_id NUMBER,\r
+
+      \    product_id NUMBER,\r
+
+      \    quantity NUMBER,\r
+
+      \r
+
+      \    FOREIGN KEY(order_id)\r
+
+      \    REFERENCES orders(order_id),\r
+
+      \r
+
+      \    FOREIGN KEY(product_id)\r
+
+      \    REFERENCES product(product_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Payment
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE payment\r
+
+      (\r
+
+      \    payment_id NUMBER PRIMARY KEY,\r
+
+      \    order_id NUMBER,\r
+
+      \    amount NUMBER,\r
+
+      \    payment_method VARCHAR2(20),\r
+
+      \    FOREIGN KEY(order_id)\r
+
+      \    REFERENCES orders(order_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Delivery
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE delivery\r
+
+      (\r
+
+      \    delivery_id NUMBER PRIMARY KEY,\r
+
+      \    order_id NUMBER,\r
+
+      \    delivery_status VARCHAR2(20),\r
+
+      \r
+
+      \    FOREIGN KEY(order_id)\r
+
+      \    REFERENCES orders(order_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Feedback
+    languageId: markdown
+  - kind: 2
+    value: "CREATE TABLE feedback\r
+
+      (\r
+
+      \    feedback_id NUMBER PRIMARY KEY,\r
+
+      \    customer_id NUMBER,\r
+
+      \    rating NUMBER,\r
+
+      \    comments VARCHAR2(100),\r
+
+      \    FOREIGN KEY(customer_id)\r
+
+      \    REFERENCES customer(customer_id)\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: Data insertion
+    languageId: markdown
+  - kind: 1
+    value: Customer
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO customer
+      VALUES(1,'Manam','Hossain','01711111111','Khulna');\r
+
+      INSERT INTO customer VALUES(2,'Moonsia','Rahman','01811111111','Dhaka');\r
+
+      INSERT INTO customer VALUES(3,'Fatema','Akter','01911111111','Jessore');\r
+
+      INSERT INTO customer VALUES(4,'Tanvir','Hasan','01611111111','Khulna');\r
+
+      INSERT INTO customer
+      VALUES(5,'Tahsin','Islam','01511111111','Barishal');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Membership
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO membership VALUES(1,1,'Gold',500);\r
+
+      INSERT INTO membership VALUES(2,2,'Silver',300);\r
+
+      INSERT INTO membership VALUES(3,3,'Gold',700);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Branch
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO branch VALUES(1,'Khulna Branch','Boyra, Khulna');\r
+
+      INSERT INTO branch VALUES(2,'Dhaka Branch','Dhanmondi, Dhaka');\r
+
+      INSERT INTO branch VALUES(3,'Jessore Branch','Rail Road, Jessore');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Employees
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO employee VALUES(1,'Shuvo',25000,1);\r
+
+      INSERT INTO employee VALUES(2,'Nasif',22000,2);\r
+
+      INSERT INTO employee VALUES(3,'Pranto',21000,3);\r
+
+      INSERT INTO employee VALUES(4,'Yousuf',23000,1);\r
+
+      INSERT INTO employee VALUES(5,'Mubin',24000,2);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Suppliers
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO supplier VALUES(1,'Ucchwas Foods','Khulna');\r
+
+      INSERT INTO supplier VALUES(2,'Sushmita Bakery Supply','Dhaka');\r
+
+      INSERT INTO supplier VALUES(3,'Solayman Traders','Jessore');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Categories
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO category VALUES(1,'Cake');\r
+
+      INSERT INTO category VALUES(2,'Bread');\r
+
+      INSERT INTO category VALUES(3,'Pastry');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Products
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO product VALUES(1,'Chocolate Cake',500,1,1);\r
+
+      INSERT INTO product VALUES(2,'Vanilla Cake',450,1,2);\r
+
+      INSERT INTO product VALUES(3,'Milk Bread',120,2,3);\r
+
+      INSERT INTO product VALUES(4,'Croissant',150,3,2);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Inventory
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO inventory VALUES(1,1,50);\r
+
+      INSERT INTO inventory VALUES(2,2,60);\r
+
+      INSERT INTO inventory VALUES(3,3,100);\r
+
+      INSERT INTO inventory VALUES(4,4,70);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Orders
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO orders VALUES(1,1,1,SYSDATE);\r
+
+      INSERT INTO orders VALUES(2,2,2,SYSDATE);\r
+
+      INSERT INTO orders VALUES(3,3,3,SYSDATE);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Order details
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO order_details VALUES(1,1,1,2);\r
+
+      INSERT INTO order_details VALUES(2,1,3,3);\r
+
+      INSERT INTO order_details VALUES(3,2,2,1);\r
+
+      INSERT INTO order_details VALUES(4,3,4,5);\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Payment
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO payment VALUES(1,1,1360,'Cash');\r
+
+      INSERT INTO payment VALUES(2,2,450,'Card');\r
+
+      INSERT INTO payment VALUES(3,3,750,'Bkash');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Deliveries
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO delivery VALUES(1,1,'Delivered');\r
+
+      INSERT INTO delivery VALUES(2,2,'Pending');\r
+
+      INSERT INTO delivery VALUES(3,3,'Delivered');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Feedback
+    languageId: markdown
+  - kind: 2
+    value: "INSERT INTO feedback VALUES(1,1,5,'Excellent');\r
+
+      INSERT INTO feedback VALUES(2,2,4,'Very Good');\r
+
+      INSERT INTO feedback VALUES(3,3,5,'Amazing');\r
+
+      COMMIT;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Select
+    languageId: markdown
+  - kind: 2
+    value: SELECT * FROM customer;
+    languageId: oracle-sql
+  - kind: 1
+    value: Where
+    languageId: markdown
+  - kind: 2
+    value: "SELECT * FROM product\r
+
+      WHERE price > 200;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Order by
+    languageId: markdown
+  - kind: 2
+    value: "SELECT * FROM product\r
+
+      ORDER BY price DESC;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Group by
+    languageId: markdown
+  - kind: 2
+    value: "SELECT category_id, AVG(price)\r
+
+      FROM product\r
+
+      GROUP BY category_id;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Having
+    languageId: markdown
+  - kind: 2
+    value: "SELECT category_id, AVG(price)\r
+
+      FROM product\r
+
+      GROUP BY category_id\r
+
+      HAVING AVG(price) > 200;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Aggregate
+    languageId: markdown
+  - kind: 2
+    value: "SELECT COUNT(*) AS total_products\r
+
+      FROM product;\r
+
+      SELECT MAX(price) AS highest_price\r
+
+      FROM product;\r
+
+      SELECT MIN(price) AS lowest_price\r
+
+      FROM product;\r
+
+      SELECT AVG(price) AS average_price\r
+
+      FROM product;\r
+
+      SELECT SUM(price) AS total_price\r
+
+      FROM product;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Inner join
+    languageId: markdown
+  - kind: 2
+    value: "SELECT c.first_name,\r
+
+      \       o.order_id\r
+
+      FROM customer c\r
+
+      JOIN orders o\r
+
+      ON c.customer_id=o.customer_id;"
+    languageId: oracle-sql
+  - kind: 1
+    value: Subquery
+    languageId: markdown
+  - kind: 2
+    value: "SELECT product_name\r
+
+      FROM product\r
+
+      WHERE price >\r
+
+      (\r
+
+      SELECT AVG(price)\r
+
+      FROM product\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: View
+    languageId: markdown
+  - kind: 2
+    value: "CREATE OR REPLACE VIEW customer_orders AS\r
+
+      SELECT c.first_name,\r
+
+      \       o.order_id\r
+
+      FROM customer c\r
+
+      JOIN orders o\r
+
+      ON c.customer_id=o.customer_id;"
+    languageId: oracle-sql
+  - kind: 1
+    value: PL / SQL
+    languageId: markdown
+  - kind: 1
+    value: Variables
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    v_name VARCHAR2(30);\r
+
+      BEGIN\r
+
+      \    SELECT first_name\r
+
+      \    INTO v_name\r
+
+      \    FROM customer\r
+
+      \    WHERE customer_id=1;\r
+
+      \    DBMS_OUTPUT.PUT_LINE(v_name);\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: IF / ELSIF
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    v_price NUMBER:=500;\r
+
+      BEGIN\r
+
+      \    IF v_price>300 THEN\r
+
+      \        DBMS_OUTPUT.PUT_LINE('Expensive');\r
+
+      \    ELSE\r
+
+      \        DBMS_OUTPUT.PUT_LINE('Cheap');\r
+
+      \    END IF;\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Basic loop
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    i NUMBER:=1;\r
+
+      BEGIN\r
+
+      \    LOOP\r
+
+      \        EXIT WHEN i>5;\r
+
+      \        DBMS_OUTPUT.PUT_LINE(i);\r
+
+      \        i:=i+1;\r
+
+      \    END LOOP;\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: WHILE loop
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    counter NUMBER := 1;\r
+
+      BEGIN\r
+
+      \    WHILE counter <= 5\r
+
+      \    LOOP\r
+
+      \        DBMS_OUTPUT.PUT_LINE(\r
+
+      \            'Counter = ' || counter\r
+
+      \        );\r
+
+      \r
+
+      \        counter := counter + 1;\r
+
+      \    END LOOP;\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Numeric for loop
+    languageId: markdown
+  - kind: 2
+    value: "BEGIN\r
+
+      \    FOR i IN 1..5\r
+
+      \    LOOP\r
+
+      \        DBMS_OUTPUT.PUT_LINE('Value = ' || i);\r
+
+      \    END LOOP;\r
+
+      \r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Cursor
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    CURSOR c IS\r
+
+      \    SELECT first_name\r
+
+      \    FROM customer;\r
+
+      \r
+
+      \    v_name customer.first_name%TYPE;\r
+
+      BEGIN\r
+
+      \    OPEN c;\r
+
+      \r
+
+      \    LOOP\r
+
+      \        FETCH c INTO v_name;\r
+
+      \r
+
+      \        EXIT WHEN c%NOTFOUND;\r
+
+      \r
+
+      \        DBMS_OUTPUT.PUT_LINE(v_name);\r
+
+      \    END LOOP;\r
+
+      \r
+
+      \    CLOSE c;\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Procedure
+    languageId: markdown
+  - kind: 2
+    value: "CREATE OR REPLACE PROCEDURE show_customer\r
+
+      (\r
+
+      \    p_id NUMBER\r
+
+      )\r
+
+      AS\r
+
+      \    v_name VARCHAR2(30);\r
+
+      BEGIN\r
+
+      \    SELECT first_name\r
+
+      \    INTO v_name\r
+
+      \    FROM customer\r
+
+      \    WHERE customer_id=p_id;\r
+
+      \r
+
+      \    DBMS_OUTPUT.PUT_LINE(v_name);\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Execute
+    languageId: markdown
+  - kind: 2
+    value: "BEGIN\r
+
+      \    show_customer(1);\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Function
+    languageId: markdown
+  - kind: 2
+    value: "CREATE OR REPLACE FUNCTION total_products\r
+
+      RETURN NUMBER\r
+
+      AS\r
+
+      \    v_count NUMBER;\r
+
+      BEGIN\r
+
+      \    SELECT COUNT(*)\r
+
+      \    INTO v_count\r
+
+      \    FROM product;\r
+
+      \r
+
+      \    RETURN v_count;\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
+  - kind: 1
+    value: Execute
+    languageId: markdown
+  - kind: 2
+    value: "DECLARE\r
+
+      \    x NUMBER;\r
+
+      BEGIN\r
+
+      \    x:=total_products;\r
+
+      \    DBMS_OUTPUT.PUT_LINE(x);\r
+
+      END;\r
+
+      /"
+    languageId: oracle-sql
